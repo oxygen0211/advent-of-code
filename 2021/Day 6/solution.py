@@ -86,12 +86,31 @@ def getChildSum(fishes, epochs):
     return sum
 
 def solutionPart2(input, epochs):
-    fish = input[0]
-    sum = len(fish)
+    initialfish = input[0]
+    fish = [0 for _ in range(7)]
+    newfish = [0 for _ in range(7)]
+
+    for f in initialfish:
+        fish[f] += 1
     
-    sum += getChildSum(fish, epochs)
+    total = sum(fish)
+
+    day = 0
+    while day < epochs:
+        d = day % 7
+        d2 = (day+2) % 7
+
+        total += fish[d]
+        newfish[d2] = fish[d]
+
+        fish[d] += newfish[d]
+
+        day += 1
+    #sum = len(fish)
     
-    print("{} fish will be produced after {} days".format(sum, epochs))
+    #sum += getChildSum(fish, epochs)
+    
+    print("{} fish will be produced after {} days".format(total, epochs))
 
 if __name__ == "__main__":
     part = int(sys.argv[1])
